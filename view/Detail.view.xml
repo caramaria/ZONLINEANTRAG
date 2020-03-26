@@ -1,0 +1,777 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:uxap="sap.uxap" xmlns:form="sap.ui.layout.form"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	controllerName="de.stadt-koeln.onlineantrag.OnlineAntragCRUD.controller.Detail">
+	<Page id="page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}" title="{i18n>detailTitle}" busy="{detailView>/busy}"
+		busyIndicatorDelay="{detailView>/delay}" enableScrolling="true">
+		<content>
+			<uxap:ObjectPageLayout id="ObjectPageLayout" showHeaderContent="true" showFooter="true" subSectionLayout="TitleOnTop"
+				enableLazyLoading="true" selectedSection="topSection2_id">
+				<uxap:headerTitle>
+					<!--<uxap:ObjectPageHeader objectTitle="{i18n>PageHeaderTitle}" objectSubtitle="{i18n>PageHeaderSubtitle}" visible="{=!${device>/system/phone}}"-->
+					<!--	objectImageURI="resources/Logo.svg" objectImageShape="Square" isObjectIconAlwaysVisible="true" showPlaceholder="true"-->
+					<!--	app:href="https://www.stadt-koeln.de/"/>-->
+					<uxap:ObjectPageHeader objectTitle="{i18n>PageHeaderTitle}" objectSubtitle="{i18n>PageHeaderSubtitle}" visible="{=!${device>/system/phone}}"/>
+				</uxap:headerTitle>
+				<uxap:headerContent>
+					<!--<FlexBox direction="Column" width="90%">-->
+					<!--	<items>-->
+					<!--		<ObjectHeader id="test" visible="{device>/system/phone}" icon="resources/Logo.svg" iconDensityAware="false" title="{i18n>PageHeaderSubtitle}"/>-->
+					<!--		<Panel headerText="{i18n>HelpSectionTitle}" expandable="true" backgroundDesign="Solid" class="sapUiTinyMarginTop sapUiSmallMarginBottom">-->
+					<!--			<content>-->
+					<!--				<VBox direction="Column" fitContainer="true">-->
+					<!--					<items>-->
+					<!--						<Text text="{i18n>HelpSectionLine1}" wrapping="true"/>-->
+					<!--					</items>-->
+					<!--					<layoutData/>-->
+					<!--				</VBox>-->
+					<!--			</content>-->
+					<!--		</Panel>-->
+					<!--	</items>-->
+					<!--</FlexBox>-->
+				</uxap:headerContent>
+				<uxap:sections>
+					<uxap:ObjectPageSection id="topSection2_id" title="{i18n>AllgemeineAngabenSectionTitle}">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection id="topSection_id" title="{i18n>AllgemeineAngabenSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="00001" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true">
+										<form:title/>
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="{i18n>HinweisAntragsteller}" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="{i18n>RechtsformAntragsteller}" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<FlexBox alignItems="Center" justifyContent="Start">
+																<items>
+																	<RadioButtonGroup>
+																		<buttons>
+																			<!-- BpCategory=1=Person; BpCategory=2=Organisation -->
+																			<RadioButton id="AllgDatenRB1" text="{i18n>Erklaerung0RB1}" selected="{= ${Organisation/BpCategory}==='1'}" enabled="false"/>
+																			<RadioButton id="AllgDatenRB3" text="{i18n>Erklaerung0RB3}" selected="{= ${Organisation/BpCategory}==='9'}" enabled="false"/>
+																			<RadioButton id="AllgDatenRB2" text="{i18n>Erklaerung0RB2}" selected="{= ${Organisation/BpCategory}==='2'}" enabled="false"/>
+																		</buttons>
+																	</RadioButtonGroup>
+																</items>
+															</FlexBox>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Auswahl des Förderprogrammes" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" visible="{= ${viewModel>/mode} === 'edit'? true: false}" value="{Header/ProgrammDescription}" type="Text"
+																required="true"/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="7" columnsM="2" labelSpanM="7" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+							</uxap:ObjectPageSubSection>
+							<!-- ************************************************************************* -->
+							<!-- ANGABEN ZUR ORGANISATION -->
+							<!-- ************************************************************************* -->
+							<uxap:ObjectPageSubSection title="{i18n>AngabenOrganisationSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handlePopoverPress" app:source="00002" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<!--<Text text="Daten der Organisation" wrapping="true" class="sapUiSmallMarginBottom"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement></form:FormElement>
+													<form:FormElement visible="{= ${Organisation/BpCategory}==='2'}">
+														<!-- Nur sichtbar wenn Antragsteller=Organisation -->
+														<form:label>
+															<Label text="Antragstellende Organisation " design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/Name}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Anrede" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/TitleTxt}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Titel" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/TitleAcaTxt}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement >
+													<form:FormElement visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Familienname" design="Bold" required="true"/>
+														</form:label>
+														<form:fields >
+															<Input enabled="false" value="{Organisation/Lastname}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Vorname" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/Firstname}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Straße und Hausnummer" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/Street}" type="Text" required="true"/>
+															<Input enabled="false" value="{Organisation/HouseNo}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Postleitzahl" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/PostlCod1}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Ort" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/City}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer geschäftlich" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/TelNumber}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer mobil" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/MobilNumber}" type="Text"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefaxnummer" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/FaxNumber}" type="Text"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="E-Mail-Adresse" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input type="Text" required="true" enabled="false" maxLength="50" value="{Organisation/EMail}"/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+							<!-- ************************************************************************* -->
+							<!-- ANGABEN ZUM ANTRAGSTELLER (Persönliche Daten) -->
+							<!-- ************************************************************************* -->
+							<uxap:ObjectPageSubSection title="{i18n>AngabenAntragstellerSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handlePopoverPress" app:source="00002" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement visible="{= ${Organisation/BpCategory}==='2'}">
+														<!-- Nur sichtbar wenn Antragsteller=Organisation -->
+														<form:label/>
+														<form:fields>
+															<Text text="Ich bin für die oben genannte Organisation die vertretungsberechtigte natürliche Person." wrapping="true"
+																class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement></form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Anrede" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/Title}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Familienname" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/LastName}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Vorname" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/FirstName}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Geburtsdatum" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<DatePicker required="false" displayFormat="medium" enabled="false" valueFormat="yyyyMMdd"
+																value="{ path: 'Contact/Birthdate' , formatter: '.formatter.date' }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Geburtsort" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/Birthplace}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Straße und Hausnummer" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/Street}" type="Text" required="false"/>
+															<Input enabled="false" value="{Contact/HouseNo}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Postleitzahl" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/PostlCod1}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Ort" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/City}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer geschäftlich" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/TelNumber}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer mobil" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/MobilNumber}" type="Text"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefaxnummer" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Contact/FaxNumber}" type="Text"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="E-Mail-Adresse" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input type="Text" required="false" enabled="false" maxLength="50" value="{Contact/EMail}"/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+							<!-- ************************************************************************* -->
+							<!-- ANGABEN ZUR ZAHLUNG -->
+							<!-- ************************************************************************* -->
+							<uxap:ObjectPageSubSection title="{i18n>AngabenZahlungSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handlePopoverPress" app:source="00002" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="Zahlungsempfänger (m/w/d) der Förderung" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Kontoinhaber (m/w/d)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/Accountholder}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="IBAN des Kontoinhabers" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/Iban}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="SWIFT/BIC" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/Swift}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Name der Bank" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Organisation/BankName}" type="Text" required="True"/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- ANGABEN ZUM PROJEKT -->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>ProjektSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title="{i18n>AngabenProjektSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handlePopoverPress" app:source="00002" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label>
+															<Label text="Titel oder Institution" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/Description}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Projektbeschreibung" labelFor="Projectdesc" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<TextArea id="Projectdesc" value="{Notes/Projectdesc}" showExceededText="true" rows="10" width="100%" valueLiveUpdate="false"
+																enabled="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="ProjectHinweis" design="Standard"/>
+														</form:label>
+														<form:fields>
+															<Text id="ProjectHinweis" text="Im Bereich Anhänge können Sie eine ausführliche Datei mit der Projektbeschreibung hinzufügen."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="Was soll gefördert werden?" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Förderbereich" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/Grouptext}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Projektart" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/Codetext}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<!--<form:FormElement>-->
+													<!--	<form:label/>-->
+													<!--	<form:fields>-->
+													<!--		<Text text="Förderzeitraum" wrapping="true" class="sapUiSmallMarginBottom"/>-->
+													<!--	</form:fields>-->
+													<!--</form:FormElement>-->
+													<form:FormElement>
+														<form:label>
+															<Label text="Förderzeitraum am / von" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<DatePicker required="true" displayFormat="medium" enabled="false" valueFormat="yyyyMMdd"
+																value="{ path: 'Header/Startdate' , formatter: '.formatter.date' }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Förderzeitraum bis" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<DatePicker required="false" displayFormat="medium" enabled="false" valueFormat="yyyyMMdd"
+																value="{ path: 'Header/Enddate' , formatter: '.formatter.date' }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="FoerderzeitraumHinweis" design="Standard"/>
+														</form:label>
+														<form:fields>
+															<Text id="FoerderzeitraumHinweis"
+																text="Tragen Sie hier das Datum oder den Zeitraum ein, in dem das Projekt beziehungsweise die Institution gefördert werden soll."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="Weitere allgemeine Projektdaten" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Findet die Veranstaltung im öffentlichen Raum statt?" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<RadioButtonGroup>
+																<buttons>
+																	<RadioButton id="rbVeranstaltungsortRB1" text="Ja" selected="{= ${Header/PublicEvent}===true}" enabled="false"/>
+																	<RadioButton id="rbVeranstaltungsortRB2" text="Nein" selected="{= ${Header/PublicEvent}===false}" enabled="false"/>
+																</buttons>
+															</RadioButtonGroup>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Ort" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/EventCity}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Termin am / von" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<DatePicker required="false" displayFormat="medium" enabled="false" valueFormat="yyyyMMdd"
+																value="{ path: 'Header/EventStartDate' , formatter: '.formatter.date' }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Termin bis" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<DatePicker required="false" displayFormat="medium" enabled="false" valueFormat="yyyyMMdd"
+																value="{ path: 'Header/EventEndDate' , formatter: '.formatter.date' }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Summe Gesamtkosten (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/SumTotalCost}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Summe Einnahmen (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/SumIncome}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="davon Summe Eigenmittel (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/SumInternalFunds}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="davon Summe Drittmittel (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/SumThirdPartyFunds}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="Differenz" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Beantragter Zuschuss (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="false" value="{Header/SumGrant}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Sind Sie vorsteuerabzugsberechtigt?" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<RadioButtonGroup>
+																<buttons>
+																	<RadioButton id="rbVorsteuerRB1" text="Ja (bitte geben Sie Netto-Beträge an)" selected="{= ${Organisation/InputTaxFlag}===true}"
+																		enabled="false"/>
+																	<RadioButton id="rbVorsteuerRB2" text="Nein (bitte geben Sie Brutto-Beträge an)" selected="{= ${Organisation/InputTaxFlag}===false}"
+																		enabled="false"/>
+																</buttons>
+															</RadioButtonGroup>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+						<uxap:customAnchorBarButton/>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- NOTIZEN/KOMMUNIKATION-->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>NotizenSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title="{i18n>NotizenSectionTitle}">
+								<uxap:blocks>
+									<form:Form>
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label>
+															<Label text="Protokoll" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<TextArea id="Protocol" value="{Notes/Protocol}" showExceededText="true" rows="10" width="100%" valueLiveUpdate="false" enabled="false"/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+									<!--<Label text="Effekte"/>-->
+									<!--<TextArea id="Effects" value="{Notes/Effects}" showExceededText="true" rows="3" width="100%" valueLiveUpdate="false" enabled="false"/>-->
+									<!--<Label text="Online Kommunikation"/>-->
+									<!--<TextArea id="Onlinecomm" value="{Notes/Onlinecomm}" showExceededText="true" rows="3" width="100%" valueLiveUpdate="false" enabled="false"/>-->
+									<!--<Label text="Resultate"/>-->
+									<!--<TextArea id="Results" value="{Notes/Results}" showExceededText="true" rows="3" width="100%" valueLiveUpdate="false" enabled="false"/>-->
+								</uxap:blocks>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- ANHÄNGE-->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>AnhaengeSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title="{i18n>AnhaengeSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handlePopoverPress" app:source="00005" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<!--<List id="attachmentTable" items="{ToAttachment}" noDataText="{i18n>AttachmentsNoData}" growing="true" growingScrollToLoad="true"-->
+									<!--	mode="None" backgroundDesign="Transparent">-->
+									<!--	<infoToolbar>-->
+									<!--		<Toolbar visible="false">-->
+									<!--			<content/>-->
+									<!--		</Toolbar>-->
+									<!--	</infoToolbar>-->
+									<!--	<headerToolbar>-->
+									<!--		<OverflowToolbar design="Transparent"></OverflowToolbar>-->
+									<!--	</headerToolbar>-->
+									<!--	<items>-->
+									<!--		<ObjectListItem title="{Description}" type="Active" press="showAttachment">-->
+									<!--			<attributes>-->
+									<!--<ObjectAttribute title="Beschreibung" text="{Description}"/>-->
+									<!--				<ObjectAttribute title="Anlagedatum" text="{ path: 'Changedate' , formatter: '.formatter.date' }"/>-->
+									<!--				<ObjectAttribute title="Größe" text="{ path: 'Filesize' , formatter: '.formatter.filesize' }"/>-->
+									<!--	<ObjectAttribute visible="{ parts: [ {path:'DWaersHaus'}, {path:'DWaersFremd'} ], formatter: '.formatter.andereWaehrung' }"-->
+									<!--		title="{i18n>BeleguebersichtColumnRechnungsbetrag}"-->
+									<!--		text="{path: 'DFremdbetrag', type: 'sap.ui.model.odata.type.Decimal', constraints:{ precision:6,scale:2} } {DWaersFremd}"/>-->
+									<!--			</attributes>-->
+									<!--			<firstStatus>-->
+									<!--				<ObjectStatus text="{Filename}" state="Information" icon="sap-icon://attachment" emphasized="true"-->
+									<!--					active="{path: 'Filename', formatter: '.formatter.attachmentVisible' }" press="showAttachment"-->
+									<!--					visible="{path: 'Filename', formatter: '.formatter.attachmentVisible' }"/>-->
+									<!--			</firstStatus>-->
+									<!--		</ObjectListItem>-->
+									<!--	</items>-->
+									<!--</List>-->
+									<UploadCollection id="UploadCollection" maximumFilenameLength="55" maximumFileSize="10000" multiple="false" change="onChange"
+										filenameLengthExceed="onFilenameLengthExceed" fileRenamed="onFileRenamed" fileSizeExceed="onFileSizeExceed" fileType=".pdf"
+										selectionChange="onSelectionChange" typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete"
+										beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" items="{ path: 'ToAttachment', templateShareable: false }"
+										numberOfAttachmentsText="Übersicht Anlagen" showSeparators="All" uploadEnabled="false" uploadButtonInvisible="true" mode="None">
+										<items>
+											<UploadCollectionItem documentId="{Loio}" fileName="{Filename}" mimeType="{MimeType}"
+												url="/sap/opu/odata/sap/ZOA_ONLINE_APPLICATION_SRV/AttachmentSet(Guid='{Guid}',Loio='{=encodeURIComponent(${Loio})}')/$value"
+												enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false">
+												<attributes>
+													<ObjectAttribute title="Beschreibung" text="{ path: 'Description'}"/>
+													<ObjectAttribute title="Anlagedatum" text="{ path: 'Changedate' , formatter: '.formatter.date' }"/>
+													<ObjectAttribute title="Größe" text="{ path: 'Filesize' , formatter: '.formatter.filesize' }"/>
+												</attributes>
+											</UploadCollectionItem>
+										</items>
+									</UploadCollection>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+						<uxap:customAnchorBarButton/>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- ERKLÄRUNGEN -->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>ErklaerungSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title="{i18n>ErklaerungSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handlePopoverPress" app:source="00006" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<VBox alignItems="Inherit" direction="Column" displayInline="false" class="sapUiTinyMarginTop">
+										<items>
+											<VBox alignItems="Start" justifyContent="Start" direction="Column">
+												<items>
+													<Label text="{i18n>Erklaerung0Begin}"/>
+													<!-- BpCategory=1=Person; BpCategory=2=Organisation -->
+													<RadioButton text="{i18n>Erklaerung0RB1}" selected="{= ${Organisation/BpCategory}==='1'}" enabled="false"/>
+													<RadioButton text="{i18n>Erklaerung0RB3}" selected="{= ${Organisation/BpCategory}==='9'}" enabled="false"/>
+													<RadioButton text="{i18n>Erklaerung0RB2}" selected="{= ${Organisation/BpCategory}==='2'}" enabled="false"/>
+													<Label text="{i18n>Erklaerung0End}"/>
+													<CheckBox text="{i18n>Erklaerung1}" selected="true" enabled="false" useEntireWidth="true" class="wrappedCheckbox"/>
+													<CheckBox text="{i18n>Erklaerung2}" selected="true" enabled="false" useEntireWidth="true" class="wrappedCheckbox"/>
+													<CheckBox text="{i18n>Erklaerung3}" selected="true" enabled="false" useEntireWidth="true" class="wrappedCheckbox"/>
+													<CheckBox text="{i18n>Erklaerung4}" selected="true" enabled="false" useEntireWidth="true" class="wrappedCheckbox"/>
+													<CheckBox text="{i18n>Erklaerung5}" selected="true" enabled="false" useEntireWidth="true" class="wrappedCheckbox"/>
+													<CheckBox text="{i18n>Erklaerung6}" selected="true" enabled="false" useEntireWidth="true" class="wrappedCheckbox"/>
+												</items>
+												<layoutData/>
+											</VBox>
+										</items>
+										<layoutData/>
+									</VBox>
+								</uxap:blocks>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+				</uxap:sections>
+			</uxap:ObjectPageLayout>
+		</content>
+		<footer>
+			<OverflowToolbar>
+				<ToolbarSpacer/>
+				<!--<Button visible="{Header/Editable}" enabled="{Header/Editable}" type="Emphasized" id="editButton" press="onEdit" text="Antrag bearbeiten"/>-->
+				<Button enabled="true" id="backButton" press="onBack" text="Zurück"/>
+			</OverflowToolbar>
+		</footer>
+	</Page>
+</mvc:View>

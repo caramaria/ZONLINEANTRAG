@@ -1,0 +1,14 @@
+.wrappedCheckbox label {
+    white-space: normal;
+    line-height: normal;
+    vertical-align: middle;
+}
+
+.sapUiSizeCompact .sapMCb {
+    height: 3.5rem;
+    width: 70rem;
+}
+
+.flex-label {
+  display: flex;
+}

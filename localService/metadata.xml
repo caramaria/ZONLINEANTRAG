@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+	xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+	<edmx:DataServices m:DataServiceVersion="2.0">
+		<Schema Namespace="ZOA_ONLINE_APPLICATION_SRV" xml:lang="de" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+			<EntityType Name="Application" sap:content-version="1">
+				<Key><PropertyRef Name="Guid"/></Key><Property Name="Header" Type="ZOA_ONLINE_APPLICATION_SRV.Header" Nullable="false"/><Property Name="Organisation" Type="ZOA_ONLINE_APPLICATION_SRV.Organisation" Nullable="false"/><Property Name="Contact" Type="ZOA_ONLINE_APPLICATION_SRV.Contact" Nullable="false"/><Property Name="Notes" Type="ZOA_ONLINE_APPLICATION_SRV.Notes" Nullable="false"/><Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="UUID" sap:creatable="false" sap:updatable="false"
+					sap:sortable="false" sap:filterable="false"/><NavigationProperty Name="ToAttachment" Relationship="ZOA_ONLINE_APPLICATION_SRV.ApplicationToAttachment"
+					FromRole="FromRole_ApplicationToAttachment" ToRole="ToRole_ApplicationToAttachment"/></EntityType>
+			<EntityType Name="Attachment" m:HasStream="true" sap:content-version="1">
+				<Key><PropertyRef Name="Guid"/><PropertyRef Name="Posid"/></Key><Property Name="Guid" Type="Edm.Guid" Nullable="false" sap:unicode="false" sap:label="Objekt GUID" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Posid" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Dummy" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Filename" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="FILENAME" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Mimetype" Type="Edm.String" Nullable="false" sap:unicode="false" sap:label="MIMETYPE" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Content" Type="Edm.Binary" Nullable="false" sap:unicode="false" sap:label="CONTENT" sap:creatable="false"
+					sap:updatable="false" sap:sortable="false" sap:filterable="false"/></EntityType>
+			<ComplexType Name="Organisation"><Property Name="FaxNumber" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Absendernummer" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Zzbkvid" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Bankverbindung" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="BankName" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Kontobez." sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="MobilNumber" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Telefon" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Accountholder" Type="Edm.String" Nullable="false" MaxLength="60" sap:label="Kontoinhaber" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="160" sap:label="NAME1" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="TelNumber" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Telefon" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="PartnerNo" Type="Edm.String" Nullable="false" MaxLength="32" sap:label="Partnernummer" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="City" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Ort" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Street" Type="Edm.String" Nullable="false" MaxLength="60" sap:label="Straße" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="HouseNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Hausnummer" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="PostlCod1" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Postleitzahl" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Country" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Land" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Iban" Type="Edm.String" Nullable="false" MaxLength="34" sap:label="IBAN" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Swift" Type="Edm.String" Nullable="false" MaxLength="11" sap:label="SWIFT/BIC" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="EMail" Type="Edm.String" Nullable="false" MaxLength="241" sap:label="E-Mail-Adresse" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/></ComplexType>
+			<ComplexType Name="Contact"><Property Name="FirstName" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="FIRST_NAME" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="TelNumber" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Telefon" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Title" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Anrede" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Birthdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Geburtsdatum" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="PartnerNo" Type="Edm.String" Nullable="false" MaxLength="32" sap:label="Partnernummer" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Birthplace" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Geburtsort" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="City" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Ort" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="LastName" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="LAST_NAME" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="MobilNumber" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Telefon" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="FaxNumber" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Absendernummer" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Street" Type="Edm.String" Nullable="false" MaxLength="60" sap:label="Straße" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="HouseNo" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Hausnummer" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="PostlCod1" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Postleitzahl" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Country" Type="Edm.String" Nullable="false" MaxLength="3" sap:label="Land" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="EMail" Type="Edm.String" Nullable="false" MaxLength="241" sap:label="E-Mail-Adresse" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/></ComplexType>
+			<ComplexType Name="Notes"><Property Name="Projectdesc" Type="Edm.String" Nullable="false" sap:label="PROJECTDESC" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Protocol" Type="Edm.String" Nullable="false" sap:label="PROTOCOL" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Onlinecomm" Type="Edm.String" Nullable="false" sap:label="ONLINECOMM" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Effects" Type="Edm.String" Nullable="false" sap:label="EFFECTS" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Results" Type="Edm.String" Nullable="false" sap:label="RESULTS" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/></ComplexType>
+			<ComplexType Name="Header"><Property Name="Editable" Type="Edm.Boolean" Nullable="false" sap:label="Flag" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="ObjectId" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Vorgangsnummer" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="PostingDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Buchungsdatum" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Status" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Beschreibung" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="ProcessType" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Vorgangsart" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="StatusTxt" Type="Edm.String" Nullable="false" MaxLength="30" sap:label="Status" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="Codegruppe" Type="Edm.String" Nullable="false" MaxLength="8" sap:label="Codegruppe" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Zzfld000000" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Online Kommunikation" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Code" Type="Edm.String" Nullable="false" MaxLength="4" sap:label="Code" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false"/><Property Name="ObjectType" Type="Edm.String" Nullable="false" MaxLength="10" sap:label="Vorgangstyp" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Grouptext" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="CodegrpBeschr." sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Startdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Beginndatum" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Codetext" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Kurztext Code" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Enddate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:label="Endedatum" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="EventCity" Type="Edm.String" Nullable="false" MaxLength="160" sap:label="Beschreibung" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="PoNumberSold" Type="Edm.String" Nullable="false" MaxLength="35" sap:label="Ext. Referenz" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="SumApproved" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="3" sap:unit="Currency" sap:label="genehmigte Summe"
+				sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="SumTotalCost" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="3" sap:unit="Currency"
+				sap:label="Summe Gesamtkosten" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="SumGrant" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="3" sap:unit="Currency" sap:label="Anforderungsbetrag"
+				sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="SumIncome" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="3" sap:unit="Currency" sap:label="Summe Einnamen"
+				sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="InputTaxFlag" Type="Edm.String" Nullable="false" MaxLength="1" sap:label="Vorsteuerabzuberechtigt" sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="SumInternalFunds" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="3" sap:unit="Currency"
+				sap:label="Summe Eigenmitte" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="SumThirdPartyFunds" Type="Edm.Decimal" Nullable="false" Precision="16" Scale="3" sap:unit="Currency"
+				sap:label="Summe Drittmittel" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/><Property Name="Currency" Type="Edm.String" Nullable="false" MaxLength="5" sap:label="Währung" sap:creatable="false" sap:updatable="false"
+				sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/></ComplexType>
+			<ComplexType Name="Bankdata"><Property Name="Bankname" Type="Edm.String" Nullable="false" MaxLength="40" sap:label="Kontobez." sap:creatable="false"
+				sap:updatable="false" sap:sortable="false" sap:filterable="false"/></ComplexType>
+			<Association Name="ApplicationToAttachment" sap:content-version="1"><End Type="ZOA_ONLINE_APPLICATION_SRV.Application" Multiplicity="1" Role="FromRole_ApplicationToAttachment"/><End Type="ZOA_ONLINE_APPLICATION_SRV.Attachment" Multiplicity="*" Role="ToRole_ApplicationToAttachment"/>
+				<ReferentialConstraint>
+					<Principal Role="FromRole_ApplicationToAttachment"><PropertyRef Name="Guid"/></Principal>
+					<Dependent Role="ToRole_ApplicationToAttachment"><PropertyRef Name="Guid"/></Dependent>
+				</ReferentialConstraint>
+			</Association>
+			<EntityContainer Name="ZOA_ONLINE_APPLICATION_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx"><EntitySet Name="ApplicationSet" EntityType="ZOA_ONLINE_APPLICATION_SRV.Application" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/><EntitySet Name="AttachmentSet" EntityType="ZOA_ONLINE_APPLICATION_SRV.Attachment" sap:creatable="false" sap:updatable="false"
+				sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+				<AssociationSet Name="ApplicationToAttachmentSet" Association="ZOA_ONLINE_APPLICATION_SRV.ApplicationToAttachment" sap:creatable="false"
+					sap:updatable="false" sap:deletable="false" sap:content-version="1"><End EntitySet="ApplicationSet" Role="FromRole_ApplicationToAttachment"/><End EntitySet="AttachmentSet" Role="ToRole_ApplicationToAttachment"/></AssociationSet>
+				<FunctionImport Name="GetBanknameFromIban" ReturnType="ZOA_ONLINE_APPLICATION_SRV.Bankdata" m:HttpMethod="GET"><Parameter Name="Iban" Type="Edm.String" Mode="In" MaxLength="34"/></FunctionImport>
+			</EntityContainer><atom:link rel="self"
+				href="https://webidecp-i072091trial.dispatcher.hanatrial.ondemand.com/destinations/CF1/sap/opu/odata/sap/ZOA_ONLINE_APPLICATION_SRV/$metadata"
+				xmlns:atom="http://www.w3.org/2005/Atom"/><atom:link rel="latest-version"
+				href="https://webidecp-i072091trial.dispatcher.hanatrial.ondemand.com/destinations/CF1/sap/opu/odata/sap/ZOA_ONLINE_APPLICATION_SRV/$metadata"
+				xmlns:atom="http://www.w3.org/2005/Atom"/></Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

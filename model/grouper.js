@@ -1,0 +1,1 @@
+sap.ui.define([],function(){"use strict";return{groupUnitNumber:function(e){return function(t){var r=t.getProperty("Header/SumTotalCost"),u,n;if(r<=20){u="LE20";n=e.getText("masterGroup1Header1")}else{u="GT20";n=e.getText("masterGroup1Header2")}return{key:u,text:n}}}}});

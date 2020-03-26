@@ -1,0 +1,125 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:semantic="sap.m.semantic"
+	controllerName="de.stadt-koeln.onlineantrag.OnlineAntragCRUD.controller.Master">
+	<semantic:MasterPage id="page" title="{masterView>/title}" navButtonPress="onNavBack" showNavButton="true">
+		<semantic:subHeader>
+			<!--<Bar id="headerBar">-->
+			<!--	<contentRight>-->
+			<!--		<SearchField id="searchField" showRefreshButton="{= !${device>/support/touch} }" tooltip="{i18n>masterSearchTooltip}" search="onSearch"></SearchField>-->
+			<!--	</contentRight>-->
+			<!--</Bar>-->
+		</semantic:subHeader>
+		<semantic:content>
+			<Table id="table" width="auto" items="{ path: '/ApplicationSet', sorter: { path: 'Header/ObjectId', descending: false } }"
+				noDataText="Um einen neuen Antrag anzulegen klicken Sie bitte rechts unten auf 'Neuer Antrag'" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
+				updateFinished="onUpdateFinished">
+				<!--<headerToolbar>-->
+				<!--	<Toolbar>-->
+						<!--<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>-->
+						<!--<ToolbarSpacer/>-->
+						<!--<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search="onSearch" width="auto"/>-->
+				<!--		<Button text="Neuer Antrag" type="Emphasized" enabled="{appView>/addEnabled}" press="onAdd"/>-->
+				<!--	</Toolbar>-->
+				<!--</headerToolbar>-->
+				<columns>
+					<Column>
+						<Text text="Titel"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Zugehöriges Amt"/>
+					</Column>
+					<Column minScreenWidth="Tablet" width="80px"  demandPopin="true">
+						<Text text="Antragsnr."/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Programm"/>
+					</Column>
+					<Column minScreenWidth="Tablet" demandPopin="true">
+						<Text text="Antragsteller"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Status"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Komm. status"/>
+					</Column>
+					<Column minScreenWidth="Desktop" demandPopin="true">
+						<Text text="Antragsdatum"/>
+					</Column>
+					<!--<Column hAlign="End">-->
+					<!--	<Text text="Gesamkosten"/>-->
+					<!--</Column>-->
+				</columns>
+				<items>
+					<ColumnListItem type="Navigation" press="onPress">
+						<cells>
+							<ObjectIdentifier title="{Header/Description}"/>
+							<Text text="{Header/RelatedDepartmentText}"/>
+							<Text text="{Header/ObjectId}"/>
+							<Text text="{Header/ProgrammDescription}"/>
+							<Text text="{Organisation/Name}"/>
+							<ObjectNumber number="{Header/StatusTxt}" state="{ path: 'Header/Status', formatter: '.formatter.status' }"/>
+							<ObjectNumber number="{Header/CommStatusTxt}" state="{ path: 'Header/CommStatus', formatter: '.formatter.commStatus' }"/>
+							<ObjectAttribute text="{ path: 'Header/PostingDate' , formatter: '.formatter.date' }" active="false" visible="true"/>
+							<!--<ObjectNumber number="{ path: 'Header/SumTotalCost' } EUR"/>-->
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<!--<PullToRefresh id="pullToRefresh" visible="{device>/support/touch}" refresh="onRefresh"/>-->
+			<!-- For client side filtering add this to the items attribute:  parameters: {operationMode: 'Client'}}" -->
+			<!--<List id="list"-->
+			<!--	items="{ path: '/ApplicationSet', sorter: { path: 'Header/ObjectId', descending: false }, groupHeaderFactory: '.createGroupHeader' }"-->
+			<!--	busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}"-->
+			<!--	mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true"-->
+			<!--	updateFinished="onUpdateFinished" selectionChange="onSelectionChange">-->
+			<!--	<infoToolbar>-->
+			<!--		<Toolbar active="true" id="filterBar" visible="{masterView>/isFilterBarVisible}" press="onOpenViewSettings">-->
+			<!--			<Title id="filterBarLabel" text="{masterView>/filterBarLabel}"/>-->
+			<!--		</Toolbar>-->
+			<!--	</infoToolbar>-->
+			<!--	<items>-->
+			<!--		<ObjectListItem type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}" press="onSelectionChange" title="{Header/Description}"-->
+			<!--			number="{ path: 'Header/SumTotalCost', formatter: '.formatter.currencyValue' }" numberUnit="EUR">-->
+			<!--			<firstStatus>-->
+			<!--				<ObjectStatus text="{Header/StatusTxt}" state="{ path: 'Header/Status', formatter: '.formatter.status' }"/>-->
+			<!--			</firstStatus>-->
+			<!--			<attributes>-->
+			<!--				<ObjectAttribute text="Zugehöriges Amt: TODO" active="false" visible="true"/>-->
+			<!--				<ObjectAttribute text="AntragsID: {Header/ObjectId}" active="false" visible="true"/>-->
+			<!--				<ObjectAttribute text="Antragsdatum: TODO { path: 'Header/Postingdate' , formatter: '.formatter.date' }" active="false" visible="true"/>-->
+			<!--			</attributes>-->
+			<!--<firstStatus>-->
+			<!-- TODO Status hier aufnehmen und filterbar machen -->
+			<!--	<ObjectStatus title="" text="{ path: 'AStatus', formatter: '.formatter.status' }"-->
+			<!--		state="{ path: 'AStatus', formatter: '.formatter.statusState' }" visible="true"/>-->
+			<!--</firstStatus>-->
+			<!--		</ObjectListItem>-->
+			<!--	</items>-->
+			<!--</List>-->
+		</semantic:content>
+		<semantic:customFooterContent>
+			<Button text="Neuer Antrag" type="Emphasized" enabled="{appView>/addEnabled}" press="onAdd"/>
+		</semantic:customFooterContent>
+		<!--	<semantic:customFooterContent>-->
+		<!--		<Button text="{i18n>AntragAusVorlageButton}" enabled="{appView>/addEnabled}" press="handleAntragvorlageValueHelp"/>-->
+		<!--</semantic:customFooterContent>-->
+		<!--<semantic:addAction>-->
+		<!--	<semantic:AddAction id="addButton" enabled="{appView>/addEnabled}" press="onAdd"/>-->
+		<!--</semantic:addAction>-->
+		<!--<semantic:sort>-->
+		<!--	<semantic:SortSelect id="sort" selectedKey="{masterView>/sortBy}" change="onSort">-->
+		<!--		<core:Item id="masterSort1" key="Header/ObjectId" text="{i18n>masterSort1}"/>-->
+		<!--		<core:Item id="masterSort2" key="Header/SumTotalCost" text="{i18n>masterSort2}"/>-->
+		<!--	</semantic:SortSelect>-->
+		<!--</semantic:sort>-->
+		<!--<semantic:filter>-->
+		<!--	<semantic:FilterAction id="filter" press="onOpenViewSettings"/>-->
+		<!--</semantic:filter>-->
+		<!--<semantic:group>-->
+		<!--	<semantic:GroupSelect id="group" selectedKey="{masterView>/groupBy}" change="onGroup">-->
+		<!--		<core:Item id="masterGroupNone" key="None" text="{i18n>masterGroupNone}"/>-->
+		<!--		<core:Item id="masterGroup1" key="Header/SumTotalCost" text="{i18n>masterGroup1}"/>-->
+		<!--	</semantic:GroupSelect>-->
+		<!--</semantic:group>-->
+	</semantic:MasterPage>
+</mvc:View>

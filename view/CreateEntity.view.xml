@@ -1,0 +1,1273 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:form="sap.ui.layout.form" xmlns:footerbar="sap.ushell.ui.footerbar" xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:smart="sap.ui.comp.smartfield" xmlns:uxap="sap.uxap" xmlns="sap.m"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	controllerName="de.stadt-koeln.onlineantrag.OnlineAntragCRUD.controller.CreateEntity">
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" title="{viewModel>/viewTitle}" busy="{viewModel>/busy}">
+		<semantic:content>
+			<uxap:ObjectPageLayout id="ObjectPageLayout" showHeaderContent="true" showFooter="true" subSectionLayout="TitleOnTop"
+				enableLazyLoading="true" selectedSection="topSection2_id">
+				<uxap:headerTitle>
+					<!--<uxap:ObjectPageHeader objectTitle="{i18n>PageHeaderTitle}" objectSubtitle="{i18n>PageHeaderSubtitle}" visible="{=!${device>/system/phone}}"-->
+					<!--	objectImageURI="resources/Logo.svg" objectImageShape="Square" isObjectIconAlwaysVisible="true" showPlaceholder="true"-->
+					<!--	app:href="https://www.stadt-koeln.de/"/>-->
+					<uxap:ObjectPageHeader id="objectPageHeaderId" objectTitle="{i18n>PageHeaderTitle}" objectSubtitle="{i18n>PageHeaderSubtitle}"
+						visible="{=!${device>/system/phone}}"/>
+				</uxap:headerTitle>
+				<uxap:headerContent>
+					<!--<FlexBox direction="Column" width="90%">-->
+					<!--	<items>-->
+					<!--		<ObjectHeader visible="{device>/system/phone}" icon="resources/Logo.svg" iconDensityAware="false" title="{i18n>PageHeaderSubtitle}"/>-->
+					<!--		<Panel headerText="{i18n>HelpSectionTitle}" expandable="true" backgroundDesign="Solid" class="sapUiTinyMarginTop sapUiSmallMarginBottom">-->
+					<!--			<content>-->
+					<!--				<VBox direction="Column" fitContainer="true">-->
+					<!--					<items>-->
+					<!--						<Text text="{i18n>HelpSectionLine1}" wrapping="true"/>-->
+					<!--					</items>-->
+					<!--					<layoutData/>-->
+					<!--				</VBox>-->
+					<!--			</content>-->
+					<!--		</Panel>-->
+					<!--	</items>-->
+					<!--</FlexBox>-->
+				</uxap:headerContent>
+				<uxap:sections>
+					<uxap:ObjectPageSection id="topSection2_id" title="{i18n>AllgemeineAngabenSectionTitle}">
+						<uxap:subSections>
+							<!-- ************************************************************************* -->
+							<!-- ALLGEMEINE ANGABEN -->
+							<!-- ************************************************************************* -->
+							<uxap:ObjectPageSubSection id="topSection_id" title="{i18n>AllgemeineAngabenSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="1" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true" id="formAllgemeineAngaben">
+										<form:title/>
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="{i18n>HinweisAntragsteller}" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="{i18n>RechtsformAntragsteller}" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<FlexBox width="100%" alignItems="Center" justifyContent="Start">
+																<!-- Cara	<VBox width="100%">
+																	<RadioButtonGroup id="changeAntragstellerRb" select="changeAntragstellerRb" width="100%">
+																		<buttons>
+																			<RadioButton width="100%" id="rbAntragstellerEinzelperson" text="{i18n>Erklaerung0RB1}" selected="{= ${Organisation/BpCategory}==='1'}"
+																				enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement" class="wrappedCheckbox"/>
+																			<RadioButton width="100%" id="rbAntragstellerEinzelpersonVertretung" text="{i18n>Erklaerung0RB2}" selected="{= ${Organisation/BpCategory}==='9'}"
+																				enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement" class="wrappedCheckbox"/>
+																			<RadioButton width="100%" id="rbAntragstellerOrganisation" text="{i18n>Erklaerung0RB3}" selected="{= ${Organisation/BpCategory}==='2'}"
+																				enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement" class="wrappedCheckbox"/>
+																		</buttons>
+																	</RadioButtonGroup>
+																	</VBox> -->
+																	
+																	<!-- Changes done by Cara -->
+																	
+																	<VBox alignItems="Start" justifyContent="Start" direction="Column">
+																		<items>
+																			<Label text="{i18n>Erklaerung0Begin}"/>
+																			<HBox alignItems="Center">
+																				<items>
+																					<RadioButton groupName="rbgAntragsteller" id="rbAntragstellerEinzelperson" selected="{= ${Organisation/BpCategory}==='1'}"   select="changeAntragstellerRb"/>
+																					<Label text="{i18n>Erklaerung0RB1}" wrapping="true"/>
+																				</items>
+																			</HBox >
+																			<HBox alignItems="Center">
+																				<items>
+																					<RadioButton groupName="rbgAntragsteller" id="rbAntragstellerEPVertretung" selected="{= ${Organisation/BpCategory}==='9'}" select="changeAntragstellerRb"/>
+																					<Label text="{i18n>Erklaerung0RB2}" wrapping="true"/>
+																				</items>
+																			</HBox>
+																			<HBox alignItems="Center">
+																				<items>
+																					<RadioButton groupName="rbgAntragsteller" id="rbAntragstellerOrganisation" selected="{= ${Organisation/BpCategory}==='2'}"  select="changeAntragstellerRb" />
+																					<Label text="{i18n>Erklaerung0RB3}" wrapping="true"/>
+																				</items>
+																			</HBox>
+																			</items>
+																		</VBox>																	
+																	
+																	
+																	
+																	
+	
+															</FlexBox>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="AntragstellerHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="AntragstellerHinweis"
+																text="Wenn Sie den Antrag für sich selbst als natürliche Person stellen, dann wählen Sie bitte die Option „Einzelperson/ -unternehmen“ aus. Wenn Sie den Antrag als Vertretungsberechtigter für eine Einzelperson oder für eine antragsstellende Organisation stellen möchten, dann wählen Sie bitte die entsprechende Option aus."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Auswahl des Förderprogrammes" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Select id="Select_Foerderprogramm_id" items="{ path: '/GrantorProgramSet', events: { dataReceived: '.afterDataLoaded'}}" enabled="true"
+																visible="{= ${viewModel>/mode} === 'edit'? false: true}" forceSelection="true" change="onFoerderprogrammSelect"
+																selectedKey="{ path : 'Header/ProgrammId', type : 'sap.ui.model.type.String', constraints : { minLength : 1 }}">
+																<core:Item key="{ExternalId}" text="{Text1}" app:Guid="{Guid}"/>
+															</Select>
+															<Input enabled="false" visible="{= ${viewModel>/mode} === 'edit'? true: false}" value="{Header/ProgrammDescription}" type="Text"
+																required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<Panel expandable="true" width="auto" class="sapUiResponsiveMargin">
+															<headerToolbar>
+																<OverflowToolbar height="3rem" style="Clear">
+																	<Title text="Anlagen zum Förderprogramm herunterladen"/>
+																	<ToolbarSpacer/>
+																</OverflowToolbar>
+															</headerToolbar>
+															<UploadCollection id="UploadCollectionProgramm" multiple="false" uploadEnabled="false" uploadButtonInvisible="true" mode="None"
+																showSeparators="All" numberOfAttachmentsText="Anlagen">
+																<items>
+																	<UploadCollectionItem id="UploadCollectionItemProgramm" documentId="{Loio}" fileName="{Filename}" mimeType="{MimeType}"
+																		url="/sap/opu/odata/sap/ZOA_ONLINE_APPLICATION_SRV/AttachmentSet(Guid='{Guid}',Loio='{=encodeURIComponent(${Loio})}')/$value"
+																		enableEdit="false" enableDelete="false" visibleDelete="false" visibleEdit="false">
+																		<attributes>
+																			<ObjectAttribute title="Beschreibung" text="{ path: 'Description'} ({ path: 'Filesize' , formatter: '.formatter.filesize' })"/>
+																		</attributes>
+																	</UploadCollectionItem>
+																</items>
+															</UploadCollection>
+														</Panel>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="VorlagenHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="VorlagenHinweis"
+																text="Klicken Sie auf den Pfeil (>) um die Anlagen zu einem Förderprogramm anzuzeigen. Die hier bereitgestellten Anlagen können Sie herunterladen und ausgefüllt im unteren Seitenbereich unter „Anhänge“ wieder hochladen."/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+											</form:FormContainer>
+										</form:formContainers>
+										<!--<form:layout>-->
+										<!--	<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="7" columnsM="2" labelSpanM="7" labelSpanS="12"/>-->
+										<!--</form:layout>-->
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+							</uxap:ObjectPageSubSection>
+							<!-- ************************************************************************* -->
+							<!-- ANGABEN ZUR ORGANISATION -->
+							<!-- ************************************************************************* -->
+							<uxap:ObjectPageSubSection title="{i18n>AngabenOrganisationSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="00001" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true" id="formOrganisation">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<!--<Text text="Daten der Organisation" wrapping="true" class="sapUiSmallMarginBottom"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement/>
+													<form:FormElement id="Form_Antragstellende_Organisation_id" visible="{= ${Organisation/BpCategory}==='2'}">
+														<!-- Nur sichtbar wenn Antragsteller=Organisation -->
+														<form:label>
+															<Label text="Antragstellende Organisation " design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/Name}" type="Text" required="true"/>-->
+															<Input maxLength="140" name="Organisation/Name" id="Organisation_Name_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/Name', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:140, nullable:false } }"
+																required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement id="Form_Anrede_id" visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Anrede" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Select id="Select_Anrede_id" items="{ path: 'selectAnredeData>/'}" enabled="true" visible="{= ${viewModel>/mode} === 'edit'? false: true}"
+																forceSelection="false" change="onAnredeSelect"
+																selectedKey="{ path : 'Organisation/Title', type : 'sap.ui.model.type.String', constraints : { minLength : 1 }}">
+																<core:Item key="{selectAnredeData>key}" text="{selectAnredeData>text}"/>
+															</Select>
+															<Input enabled="false" visible="{= ${viewModel>/mode} === 'edit'? true: false}" value="{Organisation/TitleTxt}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement id="Form_Titel_id" visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Titel" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Select id="Select_Titel_id" items="{ path: 'selectTitelData>/'}" enabled="true" visible="{= ${viewModel>/mode} === 'edit'? false: true}"
+																forceSelection="false" change="onTitelSelect" selectedKey="{ path : 'Organisation/TitleAca', type : 'sap.ui.model.type.String'}">
+																<core:Item key="{selectTitelData>key}" text="{selectTitelData>text}"/>
+															</Select>
+															<Input enabled="false" visible="{= ${viewModel>/mode} === 'edit'? true: false}" value="{Organisation/TitleAcaTxt}" type="Text"
+																required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement id="Form_Familienname_id" visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Familienname" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input id="Familienname_id" maxLength="60" enabled="{= ${viewModel>/mode} === 'edit'? false: true}"
+																value="{ path: 'Organisation/Lastname', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:60, nullable:false } }" type="Text"
+																required="true" liveChange="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement id="Form_Vorname_id" visible="{= ${Organisation/BpCategory}==='1' || ${Organisation/BpCategory}==='9'}">
+														<!-- Nur sichtbar wenn Antragsteller=Person -->
+														<form:label>
+															<Label text="Vorname" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input id="Vorname_id" maxLength="60" enabled="{= ${viewModel>/mode} === 'edit'? false: true}"
+																value="{ path: 'Organisation/Firstname', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:60, nullable:false } }"
+																type="Text" required="true" liveChange="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Straße und Hausnummer" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/Street}" type="Text" required="true"/>-->
+															<!--<Input enabled="false" value="{Organisation/HouseNo}" type="Text" required="true"/>-->
+															<Input name="Organisation/Street" maxLength="60" id="Organisation_Street_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/Street', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:60, nullable:false } }"
+																required="true"/>
+															<Input name="Organisation/HouseNo" maxLength="10" id="Organisation_HouseNo_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/HouseNo', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:10, nullable:false } }"
+																required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Postleitzahl" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/PostlCod1}" type="Text" required="true"/>-->
+															<Input name="Organisation/PostlCod1" id="Organisation_PostlCod1_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" maxLength="5"
+																value="{ path: 'Organisation/PostlCod1', type: 'sap.ui.model.type.String' , constraints:{ maxLength:5, nullable:false } }" required="true"
+																type="Number"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Ort" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/City}" type="Text" required="true"/>-->
+															<Input name="Organisation/City" maxLength="40" id="Organisation_City_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/City', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:40, nullable:false } }" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer geschäftlich" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/TelNumber}" type="Text" required="true"/>-->
+															<Input name="Organisation/TelNumber" maxLength="30" id="Organisation_TelNumber_id" valueLiveUpdate="true"
+																liveChange="_validateSaveEnablement" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/TelNumber', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:30, nullable:false } }"
+																required="true" type="Number"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer mobil" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/MobilNumber}" type="Text" required="true"/>-->
+															<Input name="Organisation/MobilNumber" maxLength="30" id="Organisation_TelNumberMobil_id" valueLiveUpdate="true"
+																liveChange="_validateSaveEnablement" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/MobilNumber', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:30, nullable:true } }"
+																type="Number"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefaxnummer" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/FaxNumber}" type="Text" required="true"/>-->
+															<Input name="Organisation/FaxNumber" maxLength="30" id="Organisation_FaxNumber_id" valueLiveUpdate="true"
+																liveChange="_validateSaveEnablement" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/FaxNumber', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:30, nullable:true } }"
+																type="Number"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="E-Mail-Adresse" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input type="Text" required="true" enabled="false" maxLength="50" value="{Organisation/EMail}"/>-->
+															<!--<Input name="Organisation/EMail" id="Organisation_EMail_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"-->
+															<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"-->
+															<!--	value="{ path: 'Organisation/EMail', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:241, nullable:false} }"-->
+															<!--	required="true" type="Email"/>-->
+															<Input name="Organisation/EMail" id="Organisation_EMail_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/EMail', type: 'sap.ui.model.odata.type.String' }" required="true" type="Email"
+																placeholder="Bitte geben Sie eine gültige E-Mail-Adresse ein."/>
+															<!--<Input name="Organisation/EMail" id="Organisation_EMail_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"-->
+															<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"-->
+															<!--	value="{ path: 'Organisation/EMail', type: 'sap.ui.model.type.String', constraints : { search : '\\S+@\\S+\\.\\S+'} }" required="true"/>-->
+															<!--<Label text="Email" required="true"/>-->
+															<!--<Input value="{ path : '/userEmail', type : 'sap.ui.model.type.String', constraints : { search : '\\S+@\\S+\\.\\S+' } }"/>-->
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+							</uxap:ObjectPageSubSection>
+							<!-- ************************************************************************* -->
+							<!-- ANGABEN ZUM ANTRAGSTELLER (Persönliche Daten) -->
+							<!-- ************************************************************************* -->
+							<uxap:ObjectPageSubSection title="{i18n>AngabenAntragstellerSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="4" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true" id="formPersoenlicheDaten">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text id="txtVertretungsvollmachtId" visible="{= ${Organisation/BpCategory}==='2' || ${Organisation/BpCategory}==='9'}"
+																text="Ich bin für die oben genannte Einzelperson oder Organisation die vertretungsberechtigte natürliche Person." wrapping="true"
+																class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement/>
+													<form:FormElement>
+														<form:label>
+															<Label text="Anrede" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_TitleTxt_id" enabled="false" value="{Contact/TitleTxt}" type="Text"/>
+															<!--<Input name="Contact/Title" id="Contact_Title_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false" visible="true"-->
+															<!--	value="{ path: 'Contact/Title', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:32, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Titel" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_TitleAcaTxt_id" enabled="false" value="{Contact/TitleAcaTxt}" type="Text" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Familienname" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_LastName_id" enabled="false" value="{Contact/LastName}" type="Text"/>
+															<!--<Input name="Contact/LastName" id="Contact_LastName_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true" value="{ path: 'Contact/LastName', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:40, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Vorname" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_FirstName_id" enabled="false" value="{Contact/FirstName}" type="Text" required="false"/>
+															<!--	<Input name="Contact/FirstName" id="Contact_FirstName_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--		visible="true" value="{ path: 'Contact/FirstName', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:40, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Geburtsdatum" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_Birthdate_id" enabled="false" value="{ path: 'Contact/Birthdate', formatter: '.formatter.date'}" required="false"/>
+															<!--<DatePicker name="Contact/Birthdate" valueFormat="yyyyMMdd" placeholder="TT.MM.JJJJ"-->
+															<!--	value="{ path: 'Contact/Birthdate', formatter: '.formatter.date'}" id="Contact_Birthdate_id" enabled="false" visible="true"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Geburtsort" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_Birthplace_id" enabled="false" value="{Contact/Birthplace}" type="Text" required="false"/>
+															<!--<Input name="Contact/Birthplace" id="Contact_Birthplace_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true" value="{ path: 'Contact/Birthplace', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:40, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Straße und Hausnummer" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_Street_id" enabled="false" value="{Contact/Street}" type="Text" required="false"/>
+															<Input id="Contact_HouseNo_id" enabled="false" value="{Contact/HouseNo}" type="Text" required="false"/>
+															<!--<Input name="Contact/Street" id="Contact_Street_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true" value="{ path: 'Contact/Street', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:60, nullable:false } }"/>-->
+															<!--<Input name="Contact/HouseNo" id="Contact_HouseNo_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true" value="{ path: 'Contact/HouseNo', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:10, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Postleitzahl" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_PostlCod1_id" enabled="false" value="{Contact/PostlCod1}" type="Text" required="false"/>
+															<!--<Input name="Contact/PostlCod1" id="Contact_PostlCod1_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true" value="{ path: 'Contact/PostlCod1', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:10, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Ort" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_City_id" enabled="false" value="{Contact/City}" type="Text" required="false"/>
+															<!--<Input name="Contact/City" id="Contact_City_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false" visible="true"-->
+															<!--	value="{ path: 'Contact/City', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:40, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer geschäftlich" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_TelNumber_id" enabled="false" value="{Contact/TelNumber}" type="Text" required="false"/>
+															<!--<Input name="Contact/TelNumber" id="Contact_TelNumber_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true" value="{ path: 'Contact/TelNumber', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:30, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefonnummer mobil" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_MobilNumber_id" enabled="false" value="{Contact/MobilNumber}" type="Text" required="false"/>
+															<!--<Input name="Contact/MobilNumber" id="Contact_MobilNumber_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true"-->
+															<!--	value="{ path: 'Contact/MobilNumber', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:30, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Telefaxnummer" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_FaxNumber_id" enabled="false" value="{Contact/FaxNumber}" type="Text" required="false"/>
+															<!--<Input name="Contact/FaxNumber" id="Contact_FaxNumber_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false"-->
+															<!--	visible="true" value="{ path: 'Contact/FaxNumber', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:30, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="E-Mail-Adresse" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="Contact_EMail_id" name="Contact/EMail" type="Text" required="false" enabled="false" value="{Contact/EMail}"/>
+															<!--<Input name="Contact/EMail" id="Contact_EMail_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement" enabled="false" visible="true"-->
+															<!--	value="{ path: 'Contact/EMail', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:241, nullable:false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="PersoenlicheDatenHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="PersoenlicheDatenHinweis"
+																text="Um diese Daten zu ändern, müssen Sie bitte Kontakt mit Ihrem zuständigen Sachbearbeiter aufnehmen. Dies können Sie zum Beispiel im unteren Seitenbereich unter „Kommunikation“ tun."/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+							<!-- ************************************************************************* -->
+							<!-- ANGABEN ZUR ZAHLUNG -->
+							<!-- ************************************************************************* -->
+							<uxap:ObjectPageSubSection title="{i18n>AngabenZahlungSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="2" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true" id="formZahlung">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="Zahlungsempfänger (m/w/d) der Förderung" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Kontoinhaber (m/w/d)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input name="Organisation/Accountholder" id="Organisation_Accountholder_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Organisation/Accountholder', type: 'sap.ui.model.odata.type.String', constraints:{ nullable:false } }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="IBAN des Kontoinhabers" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/Iban}" type="Text" required="true"/>-->
+															<!--<Input name="Organisation/Iban" id="Organisation_Iban_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"-->
+															<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" change="getBankNameFromIban"-->
+															<!--	value="{ path: 'Organisation/Iban', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:34, nullable:false } }"/>-->
+															<MaskInput name="Organisation/Iban" id="Organisation_Iban_id" mask="XXXX XXXX XXXX XXXX XXXX XX"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" change="getBankNameFromIban"
+																value="{ path: 'Organisation/Iban', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:27, nullable:false } }"
+																placeholderSymbol=" " placeholder="DEXX XXXX XXXX XXXX XXXX XX" required="true">
+																<rules>
+																	<MaskInputRule maskFormatSymbol="X" regex="[A-Z0-9]"/>
+																</rules>
+															</MaskInput>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="SWIFT/BIC" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Organisation/Swift}" type="Text" required="false"/>-->
+															<Input name="Organisation/Swift" maxLength="11" id="Organisation_Swift_id" enabled="false" visible="true"
+																value="{ path: 'Organisation/Swift', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:11, nullable:false } }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Name der Bank" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<Input id="BankName_id" value="{Organisation/BankName}" type="Text" enabled="false" required="false"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="IBANHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="IBANHinweis"
+																text="Die IBAN ist die Internationale Bankkontonummer. Sie besteht aus dem 2-stelligen Ländercode, der 2-stelligen Prüfziffer, der 8-stelligen Bankleitzahl und der 10-stelligen Bankkontonummer. Sie finden Ihre IBAN beispielsweise auf der Rückseite Ihrer Bankkarte. Die Felder SWIFT/BIC sowie der Name der Bank werden nach Eingabe einer gültigen IBAN automatisch ausgefüllt."/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- ANGABEN ZUM PROJEKT -->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>ProjektSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title="{i18n>AngabenProjektSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="3" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true" id="formProjekt">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<form:label>
+															<Label text="Titel oder Institution" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Header/Description}" type="Text" required="true"/>-->
+															<Input maxLength="40" name="Header/Description" id="Header_Description_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Header/Description', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:40, nullable:false } }"
+																placeholder="Geben Sie hier den Titel des Projekts oder den Namen der Institution ein, die gefördert werden soll."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Projektbeschreibung" labelFor="Projectdesc" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<TextArea id="Projectdesc" maxLength="2000"
+																placeholder="Nutzen Sie bitte dieses Feld zur Beschreibung des Projektes. Die Eingabe ist auf max. 2.000 Zeichen begrenzt."
+																value="{ path: 'Notes/Projectdesc', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:2000 } }" showExceededText="false"
+																rows="10" width="100%" valueLiveUpdate="false" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" liveChange="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="ProjectHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="ProjectHinweis" text="Im Bereich „Anhänge“ können Sie eine ausführliche Datei mit der Projektbeschreibung hinzufügen."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="Was soll gefördert werden?" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Förderbereich" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<ComboBox id="foerderbereichId" items="{ path: 'selectFoerderbeichData>/', sorter: { path: 'text' } }" enabled="true"
+																visible="{= ${viewModel>/mode} === 'edit'? false: true}" change="onFoerderbereichSelect"
+																selectedKey="{ path : 'Header/Codegruppe', type : 'sap.ui.model.type.String', constraints : { minLength : 1 } }"
+																placeholder="Bitte wählen Sie aus.">
+																<core:Item key="{selectFoerderbeichData>key}" text="{selectFoerderbeichData>text}"/>
+															</ComboBox>
+															<Input enabled="false" visible="{= ${viewModel>/mode} === 'edit'? true: false}" value="{Header/Grouptext}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Projektart" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<ComboBox id="projektartId" items="{ path: 'selectFoerderbeichData>/0/items/', sorter: { path: 'text' } }"
+																enabled="true" visible="{= ${viewModel>/mode} === 'edit'? false: true}" change="onProjektartSelect"
+																selectedKey="{ path : 'Header/Code', type : 'sap.ui.model.type.String', constraints : { minLength : 1 } }"
+																placeholder="Bitte wählen Sie aus.">
+																<core:Item key="{selectFoerderbeichData>key}" text="{selectFoerderbeichData>text}"/>
+															</ComboBox>
+															<Input enabled="false" visible="{= ${viewModel>/mode} === 'edit'? true: false}" value="{Header/Codetext}" type="Text" required="true"/>
+														</form:fields>
+													</form:FormElement>
+													<!--<form:FormElement>-->
+													<!--	<form:label/>-->
+													<!--	<form:fields>-->
+													<!--		<Text text="Förderzeitraum" wrapping="true" class="sapUiSmallMarginBottom"/>-->
+													<!--	</form:fields>-->
+													<!--</form:FormElement>-->
+													<form:FormElement>
+														<form:label>
+															<Label text="Förderzeitraum am / von" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<DatePicker required="true" displayFormat="medium" enabled="false" valueFormat="yyyyMMdd"-->
+															<!--	value="{ path: 'Header/Startdate' , formatter: '.formatter.date' }"/>-->
+															<!--<DatePicker name="Header/Startdate" displayFormat="short" valueFormat="yyyyMMdd" placeholder="TT.MM.JJJJ"-->
+															<!--	value="{path:'Header/Startdate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', UTC: true, strictParsing: true}, constraints : { minimum : 631148400000 }}"-->
+															<!--	id="Header_Startdate_id" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" change="_validateSaveEnablement"/>-->
+															<DatePicker name="Header/Startdate" displayFormat="short" valueFormat="yyyyMMdd"
+																placeholder="Geben Sie hier das Datum / das Beginndatum des Förderzeitraums an."
+																value="{path:'Header/Startdate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', UTC: true, strictParsing: true}}"
+																id="Header_Startdate_id" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" change="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Förderzeitraum bis" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<!--<DatePicker required="false" displayFormat="medium" enabled="false" valueFormat="yyyyMMdd"-->
+															<!--	value="{ path: 'Header/Enddate' , formatter: '.formatter.date' }"/>-->
+															<DatePicker name="Header/Enddate" displayFormat="short" valueFormat="yyyyMMdd" placeholder="Geben Sie hier das Ende des Förderzeitraums an."
+																value="{path:'Header/Enddate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', UTC: true, strictParsing: true}}"
+																id="Header_Enddate_id" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" change="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="FoerderzeitraumHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="FoerderzeitraumHinweis"
+																text="Tragen Sie hier das Datum oder den Zeitraum ein, in dem das Projekt beziehungsweise die Institution gefördert werden soll. Der Förderzeitraum darf nicht in der Vergangenheit liegen."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label/>
+														<form:fields>
+															<Text text="Weitere allgemeine Projektdaten" wrapping="true" class="sapUiSmallMarginBottom"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement id="Form_Veranstaltung_id">
+														<form:label>
+															<Label text="Handelt es sich um eine Veranstaltung?" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<RadioButtonGroup id="changeVeranstaltungRb" select="changeVeranstaltungRb">
+																<buttons>
+																	<RadioButton id="rbVeranstaltungRB1" text="Ja" selected="{= ${Header/Event}===true}"
+																		enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement"/>
+																	<RadioButton id="rbVeranstaltungRB2" text="Nein" selected="{= ${Header/Event}===false}"
+																		enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement"/>
+																</buttons>
+															</RadioButtonGroup>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement id="Form_Oeffentlicher_Raum_id" visible="{= ${Header/Event}===true? true: false}">
+														<form:label>
+															<Label text="Veranstaltung im öffentlichen Raum?" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<RadioButtonGroup id="changeVeranstaltungsortRb" select="changeVeranstaltungsortRb">
+																<buttons>
+																	<RadioButton id="rbVeranstaltungsortRB1" text="Ja" selected="{= ${Header/PublicEvent}===true}"
+																		enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement"/>
+																	<RadioButton id="rbVeranstaltungsortRB2" text="Nein" selected="{= ${Header/PublicEvent}===false}"
+																		enabled="{= ${viewModel>/mode} === 'edit'? false: true}" validateFieldGroup="_validateSaveEnablement"/>
+																</buttons>
+															</RadioButtonGroup>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement id="Form_Oeffentlicher_Raum_Hinweis_id" visible="{= ${Header/Event}===true? true: false}">
+														<form:label>
+															<Label text="Hinweis" labelFor="OeffentlicherRaumHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="OeffentlicherRaumHinweis"
+																text="Geben Sie an, ob die Veranstaltung an einem öffentlich zugänglichen Ort (außerhalb eines Gebäudes) stattfindet."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text=""/>
+														</form:label>
+														<form:fields></form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Ort" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<Input enabled="{= ${viewModel>/mode} === 'edit'? false: true}" value="{Header/EventCity}" type="Text" required="true"
+																liveChange="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label id="terminLabelId" text="Termin am / von" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<DatePicker required="false" name="Header/EventStartDate" displayFormat="short" valueFormat="yyyyMMdd"
+																placeholder="Geben Sie hier das Veranstaltungsdatum (bei mehreren Termin das Datum der ersten Veranstaltung) an."
+																value="{path:'Header/EventStartDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', UTC: true, strictParsing: true}}"
+																id="Header_EventStartDate_id" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" change="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Termin bis" design="Bold" required="false"/>
+														</form:label>
+														<form:fields>
+															<DatePicker required="false" name="Header/EventEndDate" displayFormat="short" valueFormat="yyyyMMdd"
+																placeholder="Geben Sie hier das Datum der letzten Veranstaltung an."
+																value="{path:'Header/EventEndDate', type:'sap.ui.model.type.Date', formatOptions: { style: 'medium', UTC: true, strictParsing: true} }"
+																id="Header_EventEndDate_id" enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true" change="_validateSaveEnablement"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="TerminHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="TerminHinweis" text="Die Termine dürfen nicht in der Vergangenheit liegen."/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+							<uxap:ObjectPageSubSection title="{i18n>AngabenProjektFinanzierungSubSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="5" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form editable="true" id="formFinanzierung">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+														<form:FormElement>
+														<form:label>
+															<Label text="Sind Sie vorsteuerabzugsberechtigt?" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+														<!-- Changes Done by Cara--> 	
+														
+										<!--		<VBox id="changeVorsteuerRb" alignItems="Start" justifyContent="Start" direction="Column">
+													<items>
+														<HBox alignItems="Center">
+															<items>
+																	<RadioButton id="rbVorsteuerRB1"  selected="{= ${Organisation/InputTaxFlag}===true}" 
+																	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement"/>
+																	<Label text="Ja (bitte geben Sie Netto-Beträge an)" wrapping="true"/>
+															</items>
+														</HBox >
+														<HBox alignItems="Center">
+															<items>
+																<RadioButton id="rbVorsteuerRB2" selected="{= ${Organisation/InputTaxFlag}===false}"
+																		enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement"/>	
+																<Label text="Nein (bitte geben Sie Brutto-Beträge an)" wrapping="true"/>
+															</items>
+														</HBox>
+														</items>
+													</VBox>		-->												
+														
+														
+															<RadioButtonGroup id="changeVorsteuerRb" select="changeVorsteuerRb">
+																<buttons>
+																	<RadioButton id="rbVorsteuerRB1" text="Ja (bitte geben Sie Netto-Beträge an)" selected="{= ${Organisation/InputTaxFlag}===true}"
+																		enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement"/>
+																	<RadioButton id="rbVorsteuerRB2" text="Nein (bitte geben Sie Brutto-Beträge an)" selected="{= ${Organisation/InputTaxFlag}===false}"
+																		enabled="{= ${viewModel>/mode} === 'edit'? false: true}" select="_validateSaveEnablement"/>
+																</buttons>
+															</RadioButtonGroup> 
+															
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="VorsteuerabzugHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="VorsteuerabzugHinweis"
+																text="Falls Sie unsicher sind, ob Sie zum Vorsteuerabzug berechtigt sind, wenden Sie sich bitte an das für Sie zuständige Finanzamt."/>
+														</form:fields>
+													</form:FormElement>												
+													<form:FormElement>
+														<form:label>
+															<Label text="Summe Gesamtkosten (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Header/SumTotalCost}" type="Text" required="true"/>-->
+															<Input name="Header/SumTotalCost" id="Header_SumTotalCost_id" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Header/SumTotalCost', type: 'sap.ui.model.odata.type.Decimal' , constraints : { precision: 99, scale: 2,minimum: '0', nullable: false }, formatOptions: { decimals: 2 } }"
+																placeholder="Tragen Sie hier die Summe der Gesamtkosten laut „Kosten- und Finanzierungsplan“ ein."/>
+															<!--<Input type="Number" name="Header/SumTotalCost" id="Header_SumTotalCost_id" valueLiveUpdate="true" liveChange="_validateSaveEnablement"-->
+															<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"-->
+															<!--	value="{ path: 'Header/SumTotalCost', type: 'sap.ui.model.odata.type.String', constraints : { nullable : false } }"/>-->
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Summe Einnahmen (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Header/SumIncome}" type="Text" required="true"/>-->
+															<Input name="Header/SumIncome" id="Header_SumIncome_id" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Header/SumIncome', type: 'sap.ui.model.odata.type.Decimal' , constraints : { precision: 99, scale: 2,minimum: '0', nullable: false }, formatOptions: { decimals: 2 } }"
+																placeholder="Tragen Sie hier die Summe der Einnahmen laut „Kosten- und Finanzierungsplan“ ein."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="davon Summe Eigenmittel (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Header/SumInternalFunds}" type="Text" required="true"/>-->
+															<Input name="Header/SumInternalFunds" id="Header_SumInternalFunds_id" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Header/SumInternalFunds', type: 'sap.ui.model.odata.type.Decimal' , constraints : { precision: 99, scale: 2,minimum: '0', nullable: false }, formatOptions: { decimals: 2 } }"
+																placeholder="Tragen Sie hier die Summe der Eigenmittel laut „Kosten- und Finanzierungsplan“ ein."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="davon Summe Drittmittel (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Header/SumThirdPartyFunds}" type="Text" required="true"/>-->
+															<Input name="Header/SumThirdPartyFunds" id="Header_SumThirdPartyFunds_id" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Header/SumThirdPartyFunds', type: 'sap.ui.model.odata.type.Decimal' , constraints : { precision: 99, scale: 2,minimum: '0', nullable: false }, formatOptions: { decimals: 2 } }"
+																placeholder="Tragen Sie hier die Summe der Drittmittel laut „Kosten- und Finanzierungsplan“ ein."/>
+														</form:fields>
+													</form:FormElement>
+													<!--<form:FormElement>-->
+													<!--	<form:label>-->
+													<!--		<Label text="Hinweis" labelFor="FinanzierungHinweis" design="Bold"/>-->
+													<!--	</form:label>-->
+													<!--	<form:fields>-->
+													<!--		<Text id="FinanzierungHinweis"-->
+													<!--			text="Die Summe der Einnahmen setzt sich zusammen aus der Summe der Eigenmittel sowie der Summe der Drittmittel. Es gilt also Summe Einnahmen = Summe Eigenmittel plus Summe Drittmittel."/>-->
+													<!--	</form:fields>-->
+													<!--</form:FormElement>-->
+													<!--<form:FormElement>-->
+													<!--	<form:label>-->
+													<!--		<Label text="Hinweis" labelFor="DrittmittelHinweis" design="Bold"/>-->
+													<!--	</form:label>-->
+													<!--	<form:fields>-->
+													<!--		<Text id="DrittmittelHinweis"-->
+													<!--			text="Wenn keine Eigenmittel oder keine Drittmittel eingeplant werden, tragen Sie bitte „0“ (Null) in das entsprechende Feld ein."/>-->
+													<!--	</form:fields>-->
+													<!--</form:FormElement>-->
+													<form:FormElement>
+														<form:label>
+															<Label text="" labelFor="FinanzierungHinweis" design="Standard"/>
+														</form:label>
+														<form:fields></form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Beantragter Zuschuss (in EUR)" design="Bold" required="true"/>
+														</form:label>
+														<form:fields>
+															<!--<Input enabled="false" value="{Header/SumGrant}" type="Text" required="true"/>-->
+															<Input name="Header/SumGrant" id="Header_SumGrant_id" liveChange="_validateSaveEnablement"
+																enabled="{= ${viewModel>/mode} === 'edit'? false: true}" visible="true"
+																value="{ path: 'Header/SumGrant', type: 'sap.ui.model.odata.type.Decimal' , constraints : { precision: 99, scale: 2,minimum: '0', nullable: false }, formatOptions: { decimals: 2 } }"
+																placeholder="Tragen Sie hier die Höhe der beantragten Förderung ein."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="SummeHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="SummeHinweis"
+																text="Die Angaben in diesen Feldern müssen zwingend übereinstimmen mit den entsprechenden Feldern im Kosten- und Finanzierungsplan. Bitte prüfen Sie Ihre Eingaben."/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="" labelFor="FinanzierungHinweis" design="Standard"/>
+														</form:label>
+														<form:fields></form:fields>
+													</form:FormElement>
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+								<uxap:actions/>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+						<uxap:customAnchorBarButton/>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- NOTIZEN/KOMMUNIKATION-->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>NotizenSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title=" {i18n>NotizenSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="00001" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<form:Form id="formKommunikation" editable="true">
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement visible="{= ${viewModel>/mode} === 'edit'? true: false}">
+														<form:label>
+															<Label text="Protokoll" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<TextArea name="Notes/Protocol" id="Notes_Protocol_id" showExceededText="true" rows="10" width="100%" enabled="false"
+																value="{ path: 'Notes/Protocol' }"/>
+														</form:fields>
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Online Kommunikation" design="Bold" visible="true"/>
+														</form:label>
+														<form:fields>
+															<TextArea name="Notes/Onlinecomm" maxLength="2000"
+																placeholder="Nutzen Sie dieses Feld, um mit dem zuständigen Mitarbeitenden der Stadt Köln in Kontakt zu treten. Die Eingabe ist auf max. 2.000 Zeichen begrenzt."
+																id="Notes_Onlinecomm_id" showExceededText="false" rows="6" width="100%" valueLiveUpdate="true" liveChange="_validateOnlinecommunication"
+																enabled="true" visible="true" value="{ path: 'Notes/Onlinecomm', type: 'sap.ui.model.odata.type.String' , constraints:{ maxLength:2000 } }"/>
+														</form:fields>
+													</form:FormElement>
+													<!--<form:FormElement>-->
+													<!--	<form:label>-->
+													<!--		<Label text="Hinweis" labelFor="KommunikationHinweis" design="Bold"/>-->
+													<!--	</form:label>-->
+													<!--	<form:fields>-->
+													<!--		<Text id="KommunikationHinweis" text="Nutzen Sie dieses Feld, um mit dem zuständigen Mitarbeitenden der Stadt Köln in Kontakt zu treten."/>-->
+													<!--	</form:fields>-->
+													<!--</form:FormElement>-->
+												</form:formElements>
+												<form:title/>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+									<!--<TextArea id="Protocol" value="{Notes/Protocol}" showExceededText="true" rows="3" width="100%" valueLiveUpdate="false" enabled="false"/>-->
+									<!--<Label text="Effekte"/>-->
+									<!--<TextArea id="Effects" value="{Notes/Effects}" showExceededText="true" rows="3" width="100%" valueLiveUpdate="false" enabled="false"/>-->
+									<!--<TextArea id="Onlinecomm" value="{Notes/Onlinecomm}" showExceededText="true" rows="3" width="100%" valueLiveUpdate="false" enabled="false"/>-->
+									<!--<Label text="Resultate"/>-->
+									<!--<TextArea id="Results" value="{Notes/Results}" showExceededText="true" rows="3" width="100%" valueLiveUpdate="false" enabled="false"/>-->
+								</uxap:blocks>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- ANHÄNGE-->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>AnhaengeSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title="{i18n>AnhaengeSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="00001" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<!--<List id="attachmentTable" items="{ToAttachment}" noDataText="{i18n>AttachmentsNoData}" growing="true" growingScrollToLoad="true"-->
+									<!--	mode="None" backgroundDesign="Transparent">-->
+									<!--	<infoToolbar>-->
+									<!--		<Toolbar visible="false">-->
+									<!--			<content/>-->
+									<!--		</Toolbar>-->
+									<!--	</infoToolbar>-->
+									<!--	<headerToolbar>-->
+									<!--		<OverflowToolbar design="Transparent"></OverflowToolbar>-->
+									<!--	</headerToolbar>-->
+									<!--	<items>-->
+									<!--		<ObjectListItem title="{Description}" type="Active" press="showAttachment">-->
+									<!--			<attributes>-->
+									<!--<ObjectAttribute title="Beschreibung" text="{Description}"/>-->
+									<!--				<ObjectAttribute title="Anlagedatum" text="{ path: 'Changedate' , formatter: '.formatter.date' }"/>-->
+									<!--				<ObjectAttribute title="Größe" text="{ path: 'Filesize' , formatter: '.formatter.filesize' }"/>-->
+									<!--	<ObjectAttribute visible="{ parts: [ {path:'DWaersHaus'}, {path:'DWaersFremd'} ], formatter: '.formatter.andereWaehrung' }"-->
+									<!--		title="{i18n>BeleguebersichtColumnRechnungsbetrag}"-->
+									<!--		text="{path: 'DFremdbetrag', type: 'sap.ui.model.odata.type.Decimal', constraints:{ precision:6,scale:2} } {DWaersFremd}"/>-->
+									<!--			</attributes>-->
+									<!--			<firstStatus>-->
+									<!--				<ObjectStatus text="{Filename}" state="Information" icon="sap-icon://attachment" emphasized="true"-->
+									<!--					active="{path: 'Filename', formatter: '.formatter.attachmentVisible' }" press="showAttachment"-->
+									<!--					visible="{path: 'Filename', formatter: '.formatter.attachmentVisible' }"/>-->
+									<!--			</firstStatus>-->
+									<!--		</ObjectListItem>-->
+									<!--	</items>-->
+									<!--</List>-->
+									<form:Form editable="true" id="formAnhaenge">
+										<form:title/>
+										<form:formContainers>
+											<form:FormContainer>
+												<form:formElements>
+													<form:FormElement>
+														<!--	<form:label>-->
+														<!--		<Label text="" labelFor="UploadCollection" design="Standard"/>-->
+														<!--	</form:label>-->
+														<!--	<form:fields>-->
+														<UploadCollection id="UploadCollection" maximumFilenameLength="128" maximumFileSize="5000" multiple="false" change="onChange"
+															filenameLengthExceed="onFilenameLengthExceed" fileSizeExceed="onFileSizeExceed"
+															fileType="xls,xlsx,doc,docx,ppt,pptx,rtf,jpg,jpeg,pdf,txt,png,gif,tif,tiff" typeMissmatch="onTypeMissmatch"
+															uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts" items="{ path: 'ToAttachment', templateShareable: false }"
+															numberOfAttachmentsText="Übersicht Anhänge" showSeparators="All" uploadEnabled="true" fileDeleted="onFileDeleted"
+															uploadButtonInvisible="false" mode="None" uploadUrl="/sap/opu/odata/sap/ZOA_ONLINE_APPLICATION_SRV/AttachmentSet">
+															<!--<toolbar>-->
+															<!--	<OverflowToolbar >-->
+															<!--		<Link text="Download Kosten- und Finanzierungsplan" enabled="true" href="./resources/KFP_Uebertragung_digi_Antragstellung_41.xlsx"-->
+															<!--			emphasized="false"/>-->
+															<!--		<ToolbarSpacer/>-->
+															<!--		<UploadCollectionToolbarPlaceholder/>-->
+															<!--	</OverflowToolbar>-->
+															<!--</toolbar>-->
+															<items>
+																<UploadCollectionItem id="UploadCollectionItemId" documentId="{Loio}" fileName="{Filename}" mimeType="{MimeType}"
+																	url="/sap/opu/odata/sap/ZOA_ONLINE_APPLICATION_SRV/AttachmentSet(Guid='{Guid}',Loio='{=encodeURIComponent(${Loio})}')/$value"
+																	enableEdit="false" enableDelete="true" visibleDelete="{Deletable}" visibleEdit="false">
+																	<attributes>
+																		<ObjectAttribute title="Beschreibung"
+																			text="{ path: 'Description'} ({ path: 'Filesize' , formatter: '.formatter.filesize' }), Anlagedatum: { path: 'Changedate' , formatter: '.formatter.date' }"/>
+																		<!--<ObjectAttribute title="Beschreibung" text="{ path: 'Description'}"/>-->
+																		<!--<ObjectAttribute title="Anlagedatum" text="{ path: 'Changedate' , formatter: '.formatter.date' }"/>-->
+																		<!--<ObjectAttribute title="Größe" text="{ path: 'Filesize' , formatter: '.formatter.filesize' }"/>-->
+																	</attributes>
+																</UploadCollectionItem>
+															</items>
+														</UploadCollection>
+														<!--</form:fields>-->
+													</form:FormElement>
+													<form:FormElement>
+														<form:label>
+															<Label text="Hinweis" labelFor="VorlagenHinweis" design="Bold"/>
+														</form:label>
+														<form:fields>
+															<Text id="AnhaengeHinweis"
+																text="Hier können Sie Dateien mit einer Größe von bis zu 5 GB hochladen. Erlaubte Dateitypen sind: xls,xlsx,doc,docx,ppt,pptx,rtf,jpg,jpeg,pdf,txt,png,gif,tif,tiff"/>
+														</form:fields>
+													</form:FormElement>
+												</form:formElements>
+											</form:FormContainer>
+										</form:formContainers>
+										<form:layout>
+											<form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="4" labelSpanS="12"/>
+										</form:layout>
+									</form:Form>
+								</uxap:blocks>
+								<uxap:moreBlocks/>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+						<uxap:customAnchorBarButton/>
+					</uxap:ObjectPageSection>
+					<!-- ************************************************************************* -->
+					<!-- ERKLÄRUNGEN -->
+					<!-- ************************************************************************* -->
+					<uxap:ObjectPageSection title="{i18n>ErklaerungSectionTitle}" class="sapUiSmallMarginTop">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection title="{i18n>ErklaerungSectionTitle}">
+								<!--<uxap:actions>-->
+								<!--	<Button icon="sap-icon://hint" type="Transparent" press="handleHelpPopoverPress" app:source="00001" tooltip="Hilfe öffnen"/>-->
+								<!--</uxap:actions>-->
+								<uxap:blocks>
+									<VBox alignItems="Inherit" direction="Column" displayInline="false" class="sapUiTinyMarginTop">
+										<items>
+											<VBox alignItems="Start" justifyContent="Start" direction="Column">
+												<items>
+													<Label text="{i18n>Erklaerung0Begin}" required="true"/>
+													<HBox alignItems="Center">
+														<items>
+															<RadioButton id="rbErklaerung0RB1" selected="{= ${Organisation/BpCategory}==='1'}" enabled="false"/>
+															<Label text="{i18n>Erklaerung0RB1}" wrapping="true"/>
+														</items>
+													</HBox > 
+													<HBox alignItems="Center">
+														<items>
+															<RadioButton id="rbErklaerung0RB3" selected="{= ${Organisation/BpCategory}==='9'}" enabled="false"/>
+															<Label text="{i18n>Erklaerung0RB3}" wrapping="true"/>
+														</items>
+													</HBox> 
+													<HBox alignItems="Center">
+														<items>
+															<RadioButton id="rbErklaerung0RB2" selected="{= ${Organisation/BpCategory}==='2'}" enabled="false"/>
+															<Label text="{i18n>Erklaerung0RB2}" wrapping="true"/>
+														</items>
+													</HBox> 
+													<Label text=""/>
+													<Label text="{i18n>Erklaerung0End}" required="true"/>
+													<!--<CheckBox id="checkBox1" text="{i18n>Erklaerung1}" selected="{= ${viewModel>/mode} === 'edit'? true: false}"-->
+													<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" useEntireWidth="true" class="sapUiSmallMarginBegin"-->
+													<!--	select="_validateSaveEnablement"/>-->
+													<!--<CheckBox id="checkBox2" text="{i18n>Erklaerung2}" selected="{= ${viewModel>/mode} === 'edit'? true: false}"-->
+													<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" useEntireWidth="true" class="sapUiSmallMarginBegin"-->
+													<!--	select="_validateSaveEnablement"/>-->
+													<!--<CheckBox id="checkBox3" text="{i18n>Erklaerung3}" selected="{= ${viewModel>/mode} === 'edit'? true: false}"-->
+													<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" useEntireWidth="true" class="sapUiSmallMarginBegin"-->
+													<!--	select="_validateSaveEnablement"/>-->
+													<!--<CheckBox id="checkBox4" text="{i18n>Erklaerung4}" selected="{= ${viewModel>/mode} === 'edit'? true: false}"-->
+													<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" useEntireWidth="true" class="sapUiSmallMarginBegin"-->
+													<!--	select="_validateSaveEnablement"/>-->
+													<!--<CheckBox id="checkBox5" text="{i18n>Erklaerung5}" selected="{= ${viewModel>/mode} === 'edit'? true: false}"-->
+													<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" useEntireWidth="true" class="sapUiSmallMarginBegin"-->
+													<!--	select="_validateSaveEnablement"/>-->
+													<!--<CheckBox id="checkBox6" text="{i18n>Erklaerung6}" selected="{= ${viewModel>/mode} === 'edit'? true: false}"-->
+													<!--	enabled="{= ${viewModel>/mode} === 'edit'? false: true}" useEntireWidth="true" class="sapUiSmallMarginBegin"-->
+													<!--	select="_validateSaveEnablement"/>-->
+													<CheckBox id="checkBox1" text="{i18n>Erklaerung1}" select="_validateSaveEnablement" wrapping="true" class="sapUiSmallMarginBegin"/>
+													<CheckBox id="checkBox2" text="{i18n>Erklaerung2}" select="_validateSaveEnablement" wrapping="true" class="sapUiSmallMarginBegin"/>
+													<CheckBox id="checkBox3" text="{i18n>Erklaerung3}" select="_validateSaveEnablement" wrapping="true" class="sapUiSmallMarginBegin"/>
+													<CheckBox id="checkBox4" text="{i18n>Erklaerung4}" select="_validateSaveEnablement" wrapping="true" class="sapUiSmallMarginBegin"/>
+													<CheckBox id="checkBox5" text="{i18n>Erklaerung5}" select="_validateSaveEnablement" wrapping="true" class="sapUiSmallMarginBegin"/>
+													<CheckBox id="checkBox6" text="{i18n>Erklaerung6}" select="_validateSaveEnablement" wrapping="true" class="sapUiSmallMarginBegin"/>
+													<CheckBox id="checkBox7" text="{i18n>Erklaerung7}" select="_validateSaveEnablement" wrapping="true" class="sapUiSmallMarginBegin"/>
+												</items>
+												<layoutData/>
+											</VBox>
+										</items>
+										<layoutData/>
+									</VBox>
+								</uxap:blocks>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+				</uxap:sections>
+			</uxap:ObjectPageLayout>
+		</semantic:content>
+		<!--<semantic:saveAction>-->
+		<!--	<semantic:SaveAction id="save2" enabled="{viewModel>/enableCreate}" press="onSave"/>-->
+		<!--</semantic:saveAction>-->
+		<!--<semantic:cancelAction>-->
+		<!--	<semantic:CancelAction id="cancel" press="onCancel"/>-->
+		<!--</semantic:cancelAction>-->
+		<semantic:customFooterContent>
+			<Button id="save" enabled="{viewModel>/enableCreate}" type="Emphasized" press="onSave" text="Absenden"/>
+		</semantic:customFooterContent>
+		<semantic:customFooterContent>
+			<Button id="cancel" press="onCancel" text="Zurück"/>
+		</semantic:customFooterContent>
+	</semantic:DetailPage>
+</mvc:View>
